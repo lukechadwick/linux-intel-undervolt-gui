@@ -52,7 +52,7 @@ export default class Counter extends Component<Props> {
   readVoltage = () => {
     sudo.setPassword(this.state.password);
 
-    var command = ['python', app.getPath('home') + '/undervolt.py', '--read'];
+    var command = ['python', app.getPath('home') + '/undervolt.py', '-r'];
 
     sudo.exec(command, (err, pid, result) => {
       let formattedArray = [];
