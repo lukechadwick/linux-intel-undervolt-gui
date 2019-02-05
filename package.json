@@ -66,6 +66,14 @@
       "app/main.prod.js.map",
       "package.json"
     ],
+    "extraFiles": [
+      "undervolt.py",
+      "/app/undervolt.py"
+    ],
+    "extraResources": [
+      "undervolt.py",
+      "/app/undervolt.py"
+    ],
     "dmg": {
       "contents": [
         {
@@ -256,6 +264,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.5.0",
+    "asar": "^0.14.6",
     "devtron": "^1.4.0",
     "electron-debug": "^2.0.0",
     "electron-log": "^2.2.17",

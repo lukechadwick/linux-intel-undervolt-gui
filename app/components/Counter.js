@@ -8,9 +8,6 @@ import { rootPath } from 'electron-root-path';
 const remote = require('electron').remote;
 const app = remote.app;
 
-const path = require('path');
-const fs = require('fs');
-
 var sudo = require('sudo-js');
 
 export default class Counter extends Component<Props> {
@@ -22,14 +19,16 @@ export default class Counter extends Component<Props> {
       gpuVoltage: 0,
       uncoreVoltage: 0,
       analogioVoltage: 0,
-      password: ''
+      password: '',
+      path: '',
+      path2: ''
     };
   }
 
   setVoltage = () => {
     var command = [
       'python',
-      'undervolt.py',
+      app.getPath('home') + '/undervolt.py',
       '--gpu',
       `-${Math.abs(Math.floor(this.state.gpuVoltage))}`,
       '--core',
@@ -53,13 +52,7 @@ export default class Counter extends Component<Props> {
   readVoltage = () => {
     sudo.setPassword(this.state.password);
 
-    console.log(path.join(app.getAppPath(), 'undervolt.py'));
-
-    var command = [
-      'python',
-      path.join(app.getAppPath(), 'app', 'undervolt.py'),
-      '--read'
-    ];
+    var command = ['python', app.getPath('home') + '/undervolt.py', '--read'];
 
     sudo.exec(command, (err, pid, result) => {
       let formattedArray = [];
@@ -96,7 +89,6 @@ export default class Counter extends Component<Props> {
         <div className="container">
           <h1>Undervolt Settings</h1>
           <span>Root Password </span>
-
           <br />
           <input
             name="password"
