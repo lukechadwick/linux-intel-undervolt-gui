@@ -5,7 +5,6 @@ import styles from './Counter.css';
 import routes from '../constants/routes';
 
 var sudo = require('sudo-js');
-let pass = '';
 
 export default class Counter extends Component<Props> {
   constructor(props) {
@@ -21,15 +20,25 @@ export default class Counter extends Component<Props> {
   }
 
   setVoltage = () => {
-    sudo.setPassword(this.state.password);
-
     var command = [
       'python',
-      '/home/luke/workspace/undervolt-gui/undervolt/undervolt.py',
-      '-r'
+      'undervolt/undervolt.py',
+      '--gpu',
+      `-${Math.abs(Math.floor(this.state.gpuVoltage))}`,
+      '--core',
+      `-${Math.abs(Math.floor(this.state.coreCacheValue))}`,
+      '--cache',
+      `-${Math.abs(Math.floor(this.state.coreCacheValue))}`,
+      '--uncore',
+      `-${Math.abs(Math.floor(this.state.uncoreVoltage))}`,
+      '--analogio',
+      `-${Math.abs(Math.floor(this.state.analogioVoltage))}`
     ];
 
+    console.log(command);
     sudo.exec(command, (err, pid, result) => {
+      console.log(err);
+      console.log(pid);
       console.log(result);
     });
   };
@@ -37,11 +46,7 @@ export default class Counter extends Component<Props> {
   readVoltage = () => {
     sudo.setPassword(this.state.password);
 
-    var command = [
-      'python',
-      '/home/luke/workspace/undervolt-gui/undervolt/undervolt.py',
-      '-r'
-    ];
+    var command = ['python', 'undervolt/undervolt.py', '--read'];
 
     sudo.exec(command, (err, pid, result) => {
       let formattedArray = [];
@@ -55,9 +60,9 @@ export default class Counter extends Component<Props> {
       formattedArray = formattedArray.filter(Boolean); //Remove blank lines
       this.setState({
         coreCacheValue: '-' + formattedArray[1],
-        gpuVoltage: '-' + formattedArray[2],
-        uncoreVoltage: '-' + formattedArray[3],
-        analogioVoltage: '-' + formattedArray[4]
+        gpuVoltage: '-' + formattedArray[5],
+        uncoreVoltage: '-' + formattedArray[4],
+        analogioVoltage: '-' + formattedArray[3]
       });
     });
   };
@@ -83,16 +88,12 @@ export default class Counter extends Component<Props> {
           <input
             name="password"
             type="password"
+            className="centerText"
             onChange={e => this.handleInputChange(e)}
           />
           <br />
           <br />
-          <button
-            className="btn btn-default"
-            onClick={() => this.readVoltage()}
-          >
-            Read Voltages
-          </button>
+          <button onClick={() => this.readVoltage()}>Read Voltages</button>
           <div className="slidecontainer">
             <p>Core/Cache Voltage:</p>
             <input
@@ -139,7 +140,7 @@ export default class Counter extends Component<Props> {
             <span> {this.state.analogioVoltage} mv</span>
             <br />
             <br />
-            <button>Set Voltages</button>
+            <button onClick={() => this.setVoltage()}>Set Voltages</button>
           </div>
         </div>
       </div>
