@@ -1,0 +1,11 @@
+{
+  "name": "undervolt",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "ssh://git@github.com/lukechadwick/undervolt",
+  "author": "<llukechadwick@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "create-react-app": "^2.1.3"
+  }
+}
