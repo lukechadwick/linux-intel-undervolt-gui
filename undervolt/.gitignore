@@ -1,6 +1,0 @@
-__pycache__
-*.py[co]
-*.swp
-*.egg-info
-dist
-result

@@ -59,6 +59,7 @@
     "productName": "ElectronReact",
     "appId": "org.develar.ElectronReact",
     "files": [
+      "undervolt.py",
       "app/dist/",
       "app/app.html",
       "app/main.prod.js",
@@ -258,6 +259,7 @@
     "devtron": "^1.4.0",
     "electron-debug": "^2.0.0",
     "electron-log": "^2.2.17",
+    "electron-root-path": "^1.0.9",
     "electron-updater": "^3.2.3",
     "history": "^4.7.2",
     "react": "^16.6.3",

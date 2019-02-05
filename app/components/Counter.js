@@ -3,6 +3,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Counter.css';
 import routes from '../constants/routes';
+import { rootPath } from 'electron-root-path';
+
+const remote = require('electron').remote;
+const app = remote.app;
+
+const path = require('path');
+const fs = require('fs');
 
 var sudo = require('sudo-js');
 
@@ -22,7 +29,7 @@ export default class Counter extends Component<Props> {
   setVoltage = () => {
     var command = [
       'python',
-      'undervolt/undervolt.py',
+      'undervolt.py',
       '--gpu',
       `-${Math.abs(Math.floor(this.state.gpuVoltage))}`,
       '--core',
@@ -46,7 +53,13 @@ export default class Counter extends Component<Props> {
   readVoltage = () => {
     sudo.setPassword(this.state.password);
 
-    var command = ['python', 'undervolt/undervolt.py', '--read'];
+    console.log(path.join(app.getAppPath(), 'undervolt.py'));
+
+    var command = [
+      'python',
+      path.join(app.getAppPath(), 'app', 'undervolt.py'),
+      '--read'
+    ];
 
     sudo.exec(command, (err, pid, result) => {
       let formattedArray = [];
