@@ -20,6 +20,20 @@ export default class Counter extends Component<Props> {
     };
   }
 
+  setVoltage = () => {
+    sudo.setPassword(this.state.password);
+
+    var command = [
+      'python',
+      '/home/luke/workspace/undervolt-gui/undervolt/undervolt.py',
+      '-r'
+    ];
+
+    sudo.exec(command, (err, pid, result) => {
+      console.log(result);
+    });
+  };
+
   readVoltage = () => {
     sudo.setPassword(this.state.password);
 
@@ -61,67 +75,73 @@ export default class Counter extends Component<Props> {
             <i className="fa fa-arrow-left fa-3x" />
           </Link>
         </div>
-        <br />
-        <br />
+        <div className="container">
+          <h1>Undervolt Settings</h1>
+          <span>Root Password </span>
 
-        <h1>Undervolt Settings</h1>
-        <span>Root Password </span>
-
-        <br />
-        <input
-          name="password"
-          type="password"
-          onChange={e => this.handleInputChange(e)}
-        />
-
-        <button onClick={() => this.readVoltage()}>Read</button>
-        <div className="slidecontainer">
-          <p>Core/Cache Voltage:</p>
+          <br />
           <input
-            name="coreCacheValue"
-            type="range"
-            min="-250"
-            max="0"
-            value={this.state.coreCacheValue}
+            name="password"
+            type="password"
             onChange={e => this.handleInputChange(e)}
           />
-          <span> {this.state.coreCacheValue} mv</span>
+          <br />
+          <br />
+          <button
+            className="btn btn-default"
+            onClick={() => this.readVoltage()}
+          >
+            Read Voltages
+          </button>
+          <div className="slidecontainer">
+            <p>Core/Cache Voltage:</p>
+            <input
+              name="coreCacheValue"
+              type="range"
+              min="-250"
+              max="0"
+              value={this.state.coreCacheValue}
+              onChange={e => this.handleInputChange(e)}
+            />
+            <span> {this.state.coreCacheValue} mv</span>
 
-          <p>GPU Voltage:</p>
-          <input
-            name="gpuVoltage"
-            type="range"
-            min="-250"
-            max="0"
-            value={this.state.gpuVoltage}
-            onChange={e => this.handleInputChange(e)}
-          />
-          <span> {this.state.gpuVoltage} mv</span>
+            <p>GPU Voltage:</p>
+            <input
+              name="gpuVoltage"
+              type="range"
+              min="-250"
+              max="0"
+              value={this.state.gpuVoltage}
+              onChange={e => this.handleInputChange(e)}
+            />
+            <span> {this.state.gpuVoltage} mv</span>
 
-          <p>Uncore Voltage:</p>
-          <input
-            name="uncoreVoltage"
-            type="range"
-            min="-250"
-            max="0"
-            value={this.state.uncoreVoltage}
-            onChange={e => this.handleInputChange(e)}
-          />
-          <span> {this.state.uncoreVoltage} mv</span>
+            <p>Uncore Voltage:</p>
+            <input
+              name="uncoreVoltage"
+              type="range"
+              min="-250"
+              max="0"
+              value={this.state.uncoreVoltage}
+              onChange={e => this.handleInputChange(e)}
+            />
+            <span> {this.state.uncoreVoltage} mv</span>
 
-          <p>Analog IO Voltage:</p>
-          <input
-            name="analogioVoltage"
-            type="range"
-            min="-250"
-            max="0"
-            value={this.state.analogioVoltage}
-            onChange={e => this.handleInputChange(e)}
-          />
-          <span> {this.state.analogioVoltage} mv</span>
+            <p>Analog IO Voltage:</p>
+            <input
+              name="analogioVoltage"
+              type="range"
+              min="-250"
+              max="0"
+              value={this.state.analogioVoltage}
+              onChange={e => this.handleInputChange(e)}
+            />
+            <span> {this.state.analogioVoltage} mv</span>
+            <br />
+            <br />
+            <button>Set Voltages</button>
+          </div>
         </div>
-
-        <div className={styles.btnGroup} />
       </div>
     );
   }
