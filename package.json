@@ -1,8 +1,8 @@
 {
-  "name": "electron-react-boilerplate",
+  "name": "linux-intel-undervolt-gui",
   "productName": "ElectronReact",
   "version": "0.17.1",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "description": "Undervolting GUI for Intel Linux Systems",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
@@ -100,48 +100,30 @@
     },
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate",
+      "owner": "lukechadwick",
+      "repo": "lukechadwick",
       "private": false
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
+    "url": "git+https://github.com/lukechadwick/linux-intel-undervolt-gui.git"
   },
   "author": {
-    "name": "Electron React Boilerplte Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://electron-react-boilerplate.js.org"
+    "name": "Luke Chadwick",
+    "email": "",
+    "url": "https://github.com/lukechadwick/linux-intel-undervolt-gui"
   },
-  "contributors": [
-    {
-      "name": "Vikram Rangaraj",
-      "email": "vikr01@icloud.com",
-      "url": "https://github.com/vikr01"
-    },
-    {
-      "name": "Amila Welihinda",
-      "email": "amilajack@gmail.com",
-      "url": "https://github.com/amilajack"
-    }
-  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues"
+    "url": "https://github.com/lukechadwick/linux-intel-undervolt-gui/issues"
   },
   "keywords": [
-    "electron",
-    "boilerplate",
-    "react",
-    "redux",
-    "flow",
-    "sass",
-    "webpack",
-    "hot",
-    "reload"
+    "linux",
+    "undervolt",
+    "intel"
   ],
-  "homepage": "https://github.com/electron-react-boilerplate/electron-react-boilerplate#readme",
+  "homepage": "https://github.com/lukechadwick/linux-intel-undervolt-gui#readme",
   "jest": {
     "testURL": "http://localhost/",
     "moduleNameMapper": {
@@ -279,7 +261,7 @@
     "yarn": ">=0.21.3"
   },
   "collective": {
-    "url": "https://opencollective.com/electron-react-boilerplate-594"
+    "url": "https://github.com/lukechadwick/linux-intel-undervolt-gui"
   },
   "browserslist": "electron 1.6"
 }

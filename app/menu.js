@@ -146,23 +146,11 @@ export default class MenuBuilder {
       label: 'Help',
       submenu: [
         {
-          label: 'Learn More',
-          click() {
-            shell.openExternal('http://electron.atom.io');
-          }
-        },
-        {
           label: 'Documentation',
           click() {
             shell.openExternal(
-              'https://github.com/atom/electron/tree/master/docs#readme'
+              'https://github.com/lukechadwick/linux-intel-undervolt-gui'
             );
-          }
-        },
-        {
-          label: 'Community Discussions',
-          click() {
-            shell.openExternal('https://discuss.atom.io/c/electron');
           }
         },
         {
@@ -243,23 +231,11 @@ export default class MenuBuilder {
         label: 'Help',
         submenu: [
           {
-            label: 'Learn More',
-            click() {
-              shell.openExternal('http://electron.atom.io');
-            }
-          },
-          {
             label: 'Documentation',
             click() {
               shell.openExternal(
-                'https://github.com/atom/electron/tree/master/docs#readme'
+                'https://github.com/lukechadwick/linux-intel-undervolt-gui'
               );
-            }
-          },
-          {
-            label: 'Community Discussions',
-            click() {
-              shell.openExternal('https://discuss.atom.io/c/electron');
             }
           },
           {
