@@ -1,5 +1,9 @@
 # linux-intel-undervolt-gui
 
+![alt text](https://i.imgur.com/7ZJWxeO.png)
+
+
+
 The purpose of this project is to provide an electron powered front-end for undervolting certain intel CPUs.
 
 This project uses the python script from:
