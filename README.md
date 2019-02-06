@@ -15,7 +15,12 @@ Python
 
 ### Installing
 
-This application uses a python script to talk to the hardware, the python script (undervolt.py) must be copied to your /home/ folder
+This application uses a python script to talk to the hardware, the python script (undervolt.py) must be copied to your /home/ folder. You can also install the script globally and the app will detect this, to do this:
+
+```sudo apt install python3-pip```
+
+```sudo -H pip3 install undervolt```
+
 
 
 ## Built With
