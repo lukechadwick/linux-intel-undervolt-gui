@@ -1,6 +1,6 @@
 {
   "name": "linux-intel-undervolt-gui",
-  "productName": "ElectronReact",
+  "productName": "UndervoltGUI",
   "version": "1.0.0",
   "description": "Undervolting GUI for Intel Linux Systems",
   "scripts": {
@@ -56,8 +56,8 @@
   },
   "main": "./app/main.prod.js",
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.develar.ElectronReact",
+    "productName": "UndervoltGUI",
+    "appId": "org.noname.UndervoltGUI",
     "files": [
       "app/dist/",
       "app/app.html",
