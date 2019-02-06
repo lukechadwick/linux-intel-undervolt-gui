@@ -25,6 +25,8 @@ export default class Counter extends Component<Props> {
   }
 
   setVoltage = () => {
+    sudo.setPassword(this.state.password);
+
     var command = [
       'python',
       app.getPath('home') + '/undervolt.py',
@@ -46,6 +48,27 @@ export default class Counter extends Component<Props> {
       console.log(pid);
       console.log(result);
     });
+
+    command = [
+      'undervolt',
+      '--gpu',
+      `-${Math.abs(Math.floor(this.state.gpuVoltage))}`,
+      '--core',
+      `-${Math.abs(Math.floor(this.state.coreCacheValue))}`,
+      '--cache',
+      `-${Math.abs(Math.floor(this.state.coreCacheValue))}`,
+      '--uncore',
+      `-${Math.abs(Math.floor(this.state.uncoreVoltage))}`,
+      '--analogio',
+      `-${Math.abs(Math.floor(this.state.analogioVoltage))}`
+    ];
+    console.log(command);
+
+    sudo.exec(command, (err, pid, result) => {
+      console.log(err);
+      console.log(pid);
+      console.log(result);
+    });
   };
 
   readVoltage = () => {
@@ -54,21 +77,48 @@ export default class Counter extends Component<Props> {
     var command = ['python', app.getPath('home') + '/undervolt.py', '-r'];
 
     sudo.exec(command, (err, pid, result) => {
-      let formattedArray = [];
-      let resultArray = result.split('\n'); //Split result into array by line
+      if (result) {
+        let formattedArray = [];
+        let resultArray = result.split('\n'); //Split result into array by line
 
-      resultArray.forEach(element => {
-        console.log(element);
-        formattedArray.push(element.replace(/[^\d\.]*/g, '')); //Remove text/strings from voltage numbers
-      });
+        resultArray.forEach(element => {
+          console.log(element);
+          formattedArray.push(element.replace(/[^\d\.]*/g, '')); //Remove text/strings from voltage numbers
+        });
 
-      formattedArray = formattedArray.filter(Boolean); //Remove blank lines
-      this.setState({
-        coreCacheValue: '-' + formattedArray[1],
-        gpuVoltage: '-' + formattedArray[5],
-        uncoreVoltage: '-' + formattedArray[4],
-        analogioVoltage: '-' + formattedArray[3]
-      });
+        formattedArray = formattedArray.filter(Boolean); //Remove blank lines
+        this.setState({
+          coreCacheValue: '-' + formattedArray[1],
+          gpuVoltage: '-' + formattedArray[5],
+          uncoreVoltage: '-' + formattedArray[4],
+          analogioVoltage: '-' + formattedArray[3]
+        });
+      } else {
+        command = ['undervolt', '-r'];
+        console.log('trying method 2');
+
+        sudo.setPassword(this.state.password);
+        sudo.exec(command, (err, pid, result) => {
+          if (result) {
+            console.log(result, pid, err);
+            let formattedArray = [];
+            let resultArray = result.split('\n'); //Split result into array by line
+
+            resultArray.forEach(element => {
+              console.log(element);
+              formattedArray.push(element.replace(/[^\d\.]*/g, '')); //Remove text/strings from voltage numbers
+            });
+
+            formattedArray = formattedArray.filter(Boolean); //Remove blank lines
+            this.setState({
+              coreCacheValue: '-' + formattedArray[1],
+              gpuVoltage: '-' + formattedArray[2],
+              uncoreVoltage: '-' + formattedArray[4],
+              analogioVoltage: '-' + formattedArray[5]
+            });
+          }
+        });
+      }
     });
   };
 

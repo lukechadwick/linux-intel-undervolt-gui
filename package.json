@@ -1,7 +1,7 @@
 {
   "name": "linux-intel-undervolt-gui",
   "productName": "UndervoltGUI",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Undervolting GUI for Intel Linux Systems",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
