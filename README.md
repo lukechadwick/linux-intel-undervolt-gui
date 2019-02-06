@@ -1,10 +1,34 @@
 # linux-intel-undervolt-gui
 
+The purpose of this project is to provide an electron powered front-end for undervolting certain intel CPUs.
+
 ![alt text](https://i.imgur.com/7ZJWxeO.png)
 
+## Getting Started
+
+Head to the release page and find a package suitable for your distro
+
+### Prerequisites
+
+Python
 
 
-The purpose of this project is to provide an electron powered front-end for undervolting certain intel CPUs.
+### Installing
+
+This application uses a python script to talk to the hardware, the python script (undervolt.py) must be copied to your /home/ folder
+
+
+## Built With
+
+* [Electron React Boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate) - Framework for building desktop apps quickly
+
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
 
 This project uses the python script from:
 
@@ -15,3 +39,5 @@ Therefore your system must be compatible with that in order for this to work. Pl
 The above python project uses the information provided by the reverse engineering efforts of Miha Eleršič here:
 
 https://github.com/mihic/linux-intel-undervolt
+
+
