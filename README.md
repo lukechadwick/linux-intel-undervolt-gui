@@ -10,7 +10,7 @@ Head to the release page and find a package suitable for your distro
 
 ### Prerequisites
 
-Python
+Python (tested with 3, unsure about 2)
 
 
 ### Installing
