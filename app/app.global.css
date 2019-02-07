@@ -90,7 +90,7 @@ button {
 }
 
 button:hover {
-  top: -10px;
+  top: -5px;
   box-shadow: 0px 10px 10px rgba(15, 165, 60, 0.2);
 
   -webkit-transform: rotateX(20deg);

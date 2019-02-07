@@ -2,9 +2,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Undervolt';
+const { dist } = require('cpu-benchmark');
 
 var path = require('path');
 var cluster = require('cluster');
+let benchWorker = null;
 
 cluster.setupMaster({
   exec: path.join(__dirname, 'cpuBench.js'),
@@ -24,14 +26,27 @@ export default class Benchmark extends Component {
 
       // Create a worker for each CPU
       for (var i = 0; i < cpuCount; i += 1) {
-        cluster.fork();
+        //Create benchmark thread
+        benchWorker = cluster.fork();
+
+        cluster.on('online', function(worker) {
+          console.log('WORKER: ' + worker.process.pid + ' is online');
+        });
+
+        // Send benchmark length to bench process
+        benchWorker.send({ benchTime: 10000 });
+
+        // Close process when done
+        benchWorker.disconnect();
       }
       // Code to run if we're in a worker process
     }
   };
 
   endBench = () => {
-    console.log(cluster.workers);
+    console.log(benchWorker);
+    //Code to kill bench proess
+    // ,,,
   };
   render() {
     return (
