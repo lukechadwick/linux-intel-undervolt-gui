@@ -47,6 +47,9 @@ export default class Benchmark extends Component {
           <h2>Bench</h2>
 
           <button onClick={this.cpuBench}>bench</button>
+          <br />
+          <br />
+
           <button onClick={this.endBench}>stop bench</button>
         </div>
       </div>
