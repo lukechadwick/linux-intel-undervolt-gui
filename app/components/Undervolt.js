@@ -8,7 +8,7 @@ const app = remote.app;
 
 var sudo = require('sudo-js');
 
-export default class Counter extends Component<Props> {
+export default class Undervolt extends Component<Props> {
   constructor(props) {
     super(props);
 
