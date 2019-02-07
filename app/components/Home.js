@@ -13,6 +13,10 @@ cluster.setupMaster({
 });
 
 export default class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   cpuBench = () => {
     if (cluster.isMaster) {
       // Count the machine's CPUs
@@ -35,7 +39,15 @@ export default class Home extends Component {
     return (
       <div className={styles.container} data-tid="container">
         <h2>Home</h2>
+        <a
+          onClick={() => {
+            this.props.showVoltageSettings();
+          }}
+        >
+          to Voltage Control
+        </a>
         {/* <Link to={routes.COUNTER}>to Voltage Control</Link> */}
+        <a />
         <br />
         <button onClick={this.cpuBench}>bench</button>
         <button onClick={this.endBench}>stop bench</button>

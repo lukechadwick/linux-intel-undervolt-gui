@@ -122,7 +122,6 @@ export default class Counter extends Component<Props> {
   };
 
   handleInputChange = e => {
-    console.log(event.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -130,9 +129,13 @@ export default class Counter extends Component<Props> {
     return (
       <div>
         <div className={styles.backButton} data-tid="backButton">
-          {/* <Link to={routes.HOME}>
+          <a
+            onClick={() => {
+              this.props.showVoltageSettings();
+            }}
+          >
             <i className="fa fa-arrow-left fa-3x" />
-          </Link> */}
+          </a>
         </div>
         <div className="container">
           <h1>Undervolt Settings</h1>
