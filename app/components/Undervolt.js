@@ -1,8 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Counter.css';
-import routes from '../constants/routes';
+import styles from './Undervolt.css';
 
 const remote = require('electron').remote;
 const app = remote.app;
@@ -131,9 +130,9 @@ export default class Counter extends Component<Props> {
     return (
       <div>
         <div className={styles.backButton} data-tid="backButton">
-          <Link to={routes.HOME}>
+          {/* <Link to={routes.HOME}>
             <i className="fa fa-arrow-left fa-3x" />
-          </Link>
+          </Link> */}
         </div>
         <div className="container">
           <h1>Undervolt Settings</h1>
