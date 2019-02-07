@@ -22,6 +22,12 @@ This application uses a python script to talk to the hardware, the python script
 ```sudo -H pip3 install undervolt```
 
 
+### TODO
+
+- [x] Add benchmark/stress test (in progress)
+- [ ] Add hardware info to read out temps/usage/voltages etc
+- [ ] Maybe an auto undervolt script to find the lowest stable voltage
+
 
 ## Built With
 
