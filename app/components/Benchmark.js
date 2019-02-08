@@ -8,8 +8,11 @@ var path = require('path');
 var cluster = require('cluster');
 let benchWorker = null;
 
+const remote = require('electron').remote;
+const app = remote.app;
+
 cluster.setupMaster({
-  exec: path.join(__dirname, 'cpuBench.js'),
+  exec: path.join(process.resourcesPath, 'app/cpuBench.js'),
   //args: ['--use', 'https'],
   silent: false
 });
@@ -17,15 +20,20 @@ cluster.setupMaster({
 export default class Benchmark extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { path: '' };
   }
+
   cpuBench = () => {
     if (cluster.isMaster) {
       // Count the machine's CPUs
+      this.setState({
+        path: path.join(process.resourcesPath, 'app/cpuBench.js')
+      });
+
       var cpuCount = require('os').cpus().length;
 
       // Create a worker for each CPU
-      for (var i = 0; i < cpuCount; i += 1) {
+      for (var i = 0; i < cpuCount * 2; i += 1) {
         //Create benchmark thread
         benchWorker = cluster.fork();
 
@@ -58,6 +66,7 @@ export default class Benchmark extends Component {
         >
           <i className="fa fa-arrow-left fa-3x" />
         </a>
+        <input name="path" type="text" value={this.state.path} />
         <div className="container">
           <h2>Bench</h2>
 
