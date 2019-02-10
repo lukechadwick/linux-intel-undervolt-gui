@@ -23,16 +23,12 @@ cluster.setupMaster({
 export default class Benchmark extends Component {
   constructor(props) {
     super(props);
-    this.state = { path: '' };
+    this.state = { time: '' };
   }
 
   cpuBench = () => {
     if (cluster.isMaster) {
       // Count the machine's CPUs
-      this.setState({
-        path: benchPath
-      });
-
       var cpuCount = require('os').cpus().length;
 
       // Create a worker for each CPU
@@ -45,7 +41,9 @@ export default class Benchmark extends Component {
         });
 
         // Send benchmark length to bench process
-        benchWorker.send({ benchTime: 10000 });
+        console.log(this.state.time * 1000);
+
+        benchWorker.send({ benchTime: Number(this.state.time * 1000) });
 
         // Close process when done
         benchWorker.disconnect();
@@ -59,6 +57,11 @@ export default class Benchmark extends Component {
     //Code to kill bench proess
     // ,,,
   };
+
+  handleInputChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   render() {
     return (
       <div className={styles.container} data-tid="container">
@@ -69,15 +72,19 @@ export default class Benchmark extends Component {
         >
           <i className="fa fa-arrow-left fa-3x" />
         </a>
-        <input name="path" type="text" value={this.state.path} />
         <div className="container">
           <h2>Bench</h2>
-
-          <button onClick={this.cpuBench}>bench</button>
+          <span>Bench Time in Seconds </span>
+          <input
+            name="time"
+            type="text"
+            value={this.state.time}
+            onChange={e => this.handleInputChange(e)}
+          />
           <br />
           <br />
-
-          <button onClick={this.endBench}>stop bench</button>
+          <button onClick={this.cpuBench}>Bench</button>
+          <button onClick={this.endBench}>Stop Bench</button>
         </div>
       </div>
     );
