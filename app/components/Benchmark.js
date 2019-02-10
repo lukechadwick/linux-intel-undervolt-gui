@@ -2,17 +2,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Undervolt';
+
 const { dist } = require('cpu-benchmark');
-
-var path = require('path');
-var cluster = require('cluster');
-let benchWorker = null;
-
+const path = require('path');
+const cluster = require('cluster');
 const remote = require('electron').remote;
+
 const app = remote.app;
 
+const benchPath = path.join(app.getAppPath(), 'app', 'extras', 'cpuBench.js');
+
+let benchWorker = null;
+
 cluster.setupMaster({
-  exec: path.join(process.resourcesPath, 'app/cpuBench.js'),
+  exec: benchPath,
   //args: ['--use', 'https'],
   silent: false
 });
@@ -27,7 +30,7 @@ export default class Benchmark extends Component {
     if (cluster.isMaster) {
       // Count the machine's CPUs
       this.setState({
-        path: path.join(process.resourcesPath, 'app/cpuBench.js')
+        path: benchPath
       });
 
       var cpuCount = require('os').cpus().length;

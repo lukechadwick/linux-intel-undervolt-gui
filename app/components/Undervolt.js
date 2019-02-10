@@ -3,10 +3,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Undervolt.css';
 
-const remote = require('electron').remote;
-const app = remote.app;
-
 var sudo = require('sudo-js');
+
+const resPath = process.resourcesPath + '/app/extras/undervolt.py';
 
 export default class Undervolt extends Component<Props> {
   constructor(props) {
@@ -28,7 +27,7 @@ export default class Undervolt extends Component<Props> {
 
     var command = [
       'python',
-      app.getPath('home') + '/undervolt.py',
+      resPath,
       '--gpu',
       `-${Math.abs(Math.floor(this.state.gpuVoltage))}`,
       '--core',
@@ -40,32 +39,8 @@ export default class Undervolt extends Component<Props> {
       '--analogio',
       `-${Math.abs(Math.floor(this.state.analogioVoltage))}`
     ];
-
-    console.log(command);
     sudo.exec(command, (err, pid, result) => {
       console.log(err);
-      console.log(pid);
-      console.log(result);
-    });
-
-    command = [
-      'undervolt',
-      '--gpu',
-      `-${Math.abs(Math.floor(this.state.gpuVoltage))}`,
-      '--core',
-      `-${Math.abs(Math.floor(this.state.coreCacheValue))}`,
-      '--cache',
-      `-${Math.abs(Math.floor(this.state.coreCacheValue))}`,
-      '--uncore',
-      `-${Math.abs(Math.floor(this.state.uncoreVoltage))}`,
-      '--analogio',
-      `-${Math.abs(Math.floor(this.state.analogioVoltage))}`
-    ];
-    console.log(command);
-
-    sudo.exec(command, (err, pid, result) => {
-      console.log(err);
-      console.log(pid);
       console.log(result);
     });
   };
@@ -73,9 +48,12 @@ export default class Undervolt extends Component<Props> {
   readVoltage = () => {
     sudo.setPassword(this.state.password);
 
-    var command = ['python', app.getPath('home') + '/undervolt.py', '-r'];
+    var command = ['python', resPath, '-r'];
 
     sudo.exec(command, (err, pid, result) => {
+      console.log(err);
+      console.log(result);
+
       if (result) {
         let formattedArray = [];
         let resultArray = result.split('\n'); //Split result into array by line
@@ -91,31 +69,6 @@ export default class Undervolt extends Component<Props> {
           gpuVoltage: '-' + formattedArray[5],
           uncoreVoltage: '-' + formattedArray[4],
           analogioVoltage: '-' + formattedArray[3]
-        });
-      } else {
-        command = ['undervolt', '-r'];
-        console.log('trying method 2');
-
-        sudo.setPassword(this.state.password);
-        sudo.exec(command, (err, pid, result) => {
-          if (result) {
-            console.log(result, pid, err);
-            let formattedArray = [];
-            let resultArray = result.split('\n'); //Split result into array by line
-
-            resultArray.forEach(element => {
-              console.log(element);
-              formattedArray.push(element.replace(/[^\d\.]*/g, '')); //Remove text/strings from voltage numbers
-            });
-
-            formattedArray = formattedArray.filter(Boolean); //Remove blank lines
-            this.setState({
-              coreCacheValue: '-' + formattedArray[1],
-              gpuVoltage: '-' + formattedArray[2],
-              uncoreVoltage: '-' + formattedArray[4],
-              analogioVoltage: '-' + formattedArray[5]
-            });
-          }
         });
       }
     });
