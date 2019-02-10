@@ -1,7 +1,7 @@
 {
   "name": "linux-intel-undervolt-gui",
   "productName": "UndervoltGUI",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Undervolting GUI for Intel Linux Systems",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
@@ -59,11 +59,15 @@
     "productName": "UndervoltGUI",
     "appId": "org.noname.UndervoltGUI",
     "files": [
+      "app/extras/",
       "app/dist/",
       "app/app.html",
       "app/main.prod.js",
       "app/main.prod.js.map",
       "package.json"
+    ],
+    "extraResources": [
+      "app/extras/undervolt.py"
     ],
     "dmg": {
       "contents": [
@@ -88,9 +92,7 @@
     "linux": {
       "target": [
         "deb",
-        "rpm",
-        "snap",
-        "AppImage"
+        "rpm"
       ],
       "category": "Development"
     },

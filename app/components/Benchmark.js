@@ -3,11 +3,19 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Undervolt';
 
-var path = require('path');
-var cluster = require('cluster');
+const { dist } = require('cpu-benchmark');
+const path = require('path');
+const cluster = require('cluster');
+const remote = require('electron').remote;
+
+const app = remote.app;
+
+const benchPath = path.join(app.getAppPath(), 'app', 'extras', 'cpuBench.js');
+
+let benchWorker = null;
 
 cluster.setupMaster({
-  exec: path.join(__dirname, 'cpuBench.js'),
+  exec: benchPath,
   //args: ['--use', 'https'],
   silent: false
 });
@@ -15,24 +23,45 @@ cluster.setupMaster({
 export default class Benchmark extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { time: '' };
   }
+
   cpuBench = () => {
     if (cluster.isMaster) {
       // Count the machine's CPUs
       var cpuCount = require('os').cpus().length;
 
       // Create a worker for each CPU
-      for (var i = 0; i < cpuCount; i += 1) {
-        cluster.fork();
+      for (var i = 0; i < cpuCount * 2; i += 1) {
+        //Create benchmark thread
+        benchWorker = cluster.fork();
+
+        cluster.on('online', function(worker) {
+          console.log('WORKER: ' + worker.process.pid + ' is online');
+        });
+
+        // Send benchmark length to bench process
+        console.log(this.state.time * 1000);
+
+        benchWorker.send({ benchTime: Number(this.state.time * 1000) });
+
+        // Close process when done
+        benchWorker.disconnect();
       }
       // Code to run if we're in a worker process
     }
   };
 
   endBench = () => {
-    console.log(cluster.workers);
+    console.log(benchWorker);
+    //Code to kill bench proess
+    // ,,,
   };
+
+  handleInputChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   render() {
     return (
       <div className={styles.container} data-tid="container">
@@ -45,12 +74,17 @@ export default class Benchmark extends Component {
         </a>
         <div className="container">
           <h2>Bench</h2>
-
-          <button onClick={this.cpuBench}>bench</button>
+          <span>Bench Time in Seconds </span>
+          <input
+            name="time"
+            type="text"
+            value={this.state.time}
+            onChange={e => this.handleInputChange(e)}
+          />
           <br />
           <br />
-
-          <button onClick={this.endBench}>stop bench</button>
+          <button onClick={this.cpuBench}>Bench</button>
+          <button onClick={this.endBench}>Stop Bench</button>
         </div>
       </div>
     );
