@@ -1,3 +1,9 @@
+# 1.2.0 (2018.2.11)
+
+#### Features
+
+- **CPUInfo:** Add cpuinfo to benchnark page.
+
 # 1.1.0 (2018.2.11)
 
 #### Features
