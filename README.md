@@ -2,8 +2,8 @@
 
 The purpose of this project is to provide an electron powered front-end for undervolting certain intel CPUs.
 
-![alt text](https://i.imgur.com/7ZJWxeO.png)
-![alt text](https://i.imgur.com/WROzZ6A.png)
+![alt text](https://i.imgur.com/DlJGNxu.png)
+![alt text](https://i.imgur.com/7HiZ7x0.png)
 
 ## Getting Started
 
