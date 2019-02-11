@@ -17,8 +17,8 @@ SecureBoot disabled: msr provides an interface to read and write the model-speci
 
 ## TODO
 
-- [x] Add benchmark/stress test
-- [x] Add hardware info to read out temps/usage/voltages etc
+- [x] ~~Add benchmark/stress test~~
+- [x] ~~Add hardware info to read out temps/usage/voltages etc~~
 - [ ] Maybe an auto undervolt script to find the lowest stable voltage
 
 ## Built With
