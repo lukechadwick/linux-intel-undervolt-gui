@@ -7,16 +7,30 @@ const { dist } = require('cpu-benchmark');
 const path = require('path');
 const cluster = require('cluster');
 const remote = require('electron').remote;
+const isDev = require('electron-is-dev');
 
 const app = remote.app;
-
-const benchPath = path.join(app.getAppPath(), 'app', 'extras', 'cpuBench.js');
-
 let benchWorker = null;
+let pids = [];
+
+const productionPath = path.join(
+  app.getAppPath(),
+  'app',
+  'extras',
+  'cpuBench.js'
+);
+const developmentPath = 'app/extras/cpuBench.js';
+
+let benchPath = '';
+
+if (isDev) {
+  benchPath = developmentPath;
+} else {
+  benchPath = productionPath;
+}
 
 cluster.setupMaster({
   exec: benchPath,
-  //args: ['--use', 'https'],
   silent: false
 });
 
@@ -32,30 +46,35 @@ export default class Benchmark extends Component {
       var cpuCount = require('os').cpus().length;
 
       // Create a worker for each CPU
-      for (var i = 0; i < cpuCount * 2; i += 1) {
+      for (var i = 0; i < cpuCount * 1; i += 1) {
         //Create benchmark thread
         benchWorker = cluster.fork();
+
+        // Add worker pid to pid array
+        pids.push(benchWorker.process.pid);
 
         cluster.on('online', function(worker) {
           console.log('WORKER: ' + worker.process.pid + ' is online');
         });
 
         // Send benchmark length to bench process
-        console.log(this.state.time * 1000);
-
         benchWorker.send({ benchTime: Number(this.state.time * 1000) });
 
-        // Close process when done
+        // Disconnect from process when done
         benchWorker.disconnect();
       }
-      // Code to run if we're in a worker process
+      console.log(pids);
     }
   };
 
   endBench = () => {
-    console.log(benchWorker);
-    //Code to kill bench proess
-    // ,,,
+    // Kill each process in pids array
+    pids.forEach(pid => {
+      console.log('killing', pid);
+      process.kill(pid);
+    });
+    // Empty pids array
+    pids = [];
   };
 
   handleInputChange = e => {
@@ -73,9 +92,12 @@ export default class Benchmark extends Component {
           <i className="fa fa-arrow-left fa-3x" />
         </a>
         <div className="container">
-          <h2>Bench</h2>
-          <span>Bench Time in Seconds </span>
+          <h2>Stress Test</h2>
+          <br />
+          <br />
+          <span>Benchmark Time in Seconds </span>
           <input
+            style={{ maxWidth: '8rem' }}
             name="time"
             type="text"
             value={this.state.time}
@@ -83,8 +105,18 @@ export default class Benchmark extends Component {
           />
           <br />
           <br />
-          <button onClick={this.cpuBench}>Bench</button>
-          <button onClick={this.endBench}>Stop Bench</button>
+          <button style={{ marginRight: '1rem' }} onClick={this.cpuBench}>
+            Start Benchmark
+          </button>
+          <button onClick={this.endBench}>Stop Benchmark</button>
+          {/* <br />
+          <br />
+          <br />
+          <br />
+          <h2>Processor Info:</h2>
+          <br />
+          <br />
+          <span>Benchmark Time in Seconds </span> */}
         </div>
       </div>
     );

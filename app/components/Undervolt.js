@@ -2,10 +2,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Undervolt.css';
+const isDev = require('electron-is-dev');
 
 var sudo = require('sudo-js');
 
-const resPath = process.resourcesPath + '/app/extras/undervolt.py';
+const productionPath = process.resourcesPath + '/app/extras/undervolt.py';
+const developmentPath = 'app/extras/undervolt.py';
+
+let resPath = '';
+
+if (isDev) {
+  resPath = developmentPath;
+} else {
+  resPath = productionPath;
+}
 
 export default class Undervolt extends Component<Props> {
   constructor(props) {
