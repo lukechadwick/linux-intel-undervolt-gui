@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Undervolt';
+import CpuInfo from './CpuInfo';
 
 const { dist } = require('cpu-benchmark');
 const path = require('path');
@@ -108,14 +109,11 @@ export default class Benchmark extends Component {
             Start Benchmark
           </button>
           <button onClick={this.endBench}>Stop Benchmark</button>
-          {/* <br />
           <br />
           <br />
           <br />
-          <h2>Processor Info:</h2>
           <br />
-          <br />
-          <span>Benchmark Time in Seconds </span> */}
+          <CpuInfo />
         </div>
       </div>
     );
