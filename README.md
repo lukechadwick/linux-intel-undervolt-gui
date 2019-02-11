@@ -12,7 +12,7 @@ Head to the release page and find a package suitable for your distro
 
 Python (tested with 3, unsure about 2)
 
-Secure boot disabled: msr provides an interface to read and write the model-specific registers and this isn't possible with secure boot enabled.
+SecureBoot disabled: msr provides an interface to read and write the model-specific registers and under linux this isn't possible with SecureBoot enabled.
 
 ## TODO
 
