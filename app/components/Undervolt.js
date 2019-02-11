@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Undervolt.css';
 const isDev = require('electron-is-dev');
-
-var sudo = require('sudo-js');
+const sudo = require('sudo-js');
 
 const productionPath = process.resourcesPath + '/app/extras/undervolt.py';
 const developmentPath = 'app/extras/undervolt.py';
@@ -61,24 +60,39 @@ export default class Undervolt extends Component<Props> {
     var command = ['python', resPath, '-r'];
 
     sudo.exec(command, (err, pid, result) => {
-      console.log(err);
+      if (err) console.log(err);
       console.log(result);
 
       if (result) {
         let formattedArray = [];
-        let resultArray = result.split('\n'); //Split result into array by line
 
+        //Split result into array by line
+        let resultArray = result.split('\n');
+
+        ///Remove text/strings/symbols from voltage numbers
         resultArray.forEach(element => {
-          console.log(element);
-          formattedArray.push(element.replace(/[^\d\.]*/g, '')); //Remove text/strings from voltage numbers
+          formattedArray.push(element.replace(/[^\d\.]*/g, ''));
         });
 
-        formattedArray = formattedArray.filter(Boolean); //Remove blank lines
+        // Find indexes
+        let coreIndex = resultArray.findIndex(element =>
+          element.includes('core')
+        );
+        let analogioIndex = resultArray.findIndex(element =>
+          element.includes('analogio')
+        );
+        let uncoreIndex = resultArray.findIndex(element =>
+          element.includes('uncore')
+        );
+        let gpuIndex = resultArray.findIndex(element =>
+          element.includes('gpu')
+        );
+
         this.setState({
-          coreCacheValue: '-' + formattedArray[1],
-          gpuVoltage: '-' + formattedArray[5],
-          uncoreVoltage: '-' + formattedArray[4],
-          analogioVoltage: '-' + formattedArray[3]
+          coreCacheValue: '-' + formattedArray[coreIndex],
+          gpuVoltage: '-' + formattedArray[gpuIndex],
+          uncoreVoltage: '-' + formattedArray[uncoreIndex],
+          analogioVoltage: '-' + formattedArray[analogioIndex]
         });
       }
     });
@@ -107,7 +121,6 @@ export default class Undervolt extends Component<Props> {
           <input
             name="password"
             type="password"
-            className="centerText"
             onChange={e => this.handleInputChange(e)}
           />
           <br />

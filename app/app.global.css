@@ -18,11 +18,12 @@ body {
   overflow-y: hidden;
 }
 
-.container {
+input {
+  border-radius: 25px;
   text-align: center;
 }
 
-.centerText {
+.container {
   text-align: center;
 }
 

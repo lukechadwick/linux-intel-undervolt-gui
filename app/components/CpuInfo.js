@@ -88,11 +88,8 @@ class CpuInfo extends Component {
             return (
               <React.Fragment>
                 {i % 4 == 0 && <br />}
-
-                <span>
-                  <b> {i}: </b>
-                </span>
-                <label>{data.load.toFixed(1)}%</label>
+                <b> {i}: </b>
+                <label key={i + 'cpu'}>{data.load.toFixed(1)}%</label>
               </React.Fragment>
             );
           })}
@@ -106,11 +103,8 @@ class CpuInfo extends Component {
             return (
               <React.Fragment>
                 {i % 4 == 0 && <br />}
-
-                <span>
-                  <b> {i}: </b>
-                </span>
-                <label>{data}GHz</label>
+                <b> {i}: </b>
+                <label key={i + 'speed'}>{data}GHz</label>
               </React.Fragment>
             );
           })}

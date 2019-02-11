@@ -95,9 +95,9 @@ export default class Benchmark extends Component {
           <h2>Stress Test</h2>
           <br />
           <br />
-          <span>Benchmark Time in Seconds </span>
+          <span>Benchmark Time in Seconds: </span>
           <input
-            style={{ maxWidth: '8rem' }}
+            style={{ maxWidth: '5rem' }}
             name="time"
             type="text"
             value={this.state.time}
