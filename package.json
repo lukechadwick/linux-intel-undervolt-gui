@@ -257,7 +257,8 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "source-map-support": "^0.5.9",
-    "sudo-js": "^1.0.2"
+    "sudo-js": "^1.0.2",
+    "systeminformation": "^4.0.10"
   },
   "devEngines": {
     "node": ">=7.x",
