@@ -1,3 +1,9 @@
+# 1.1.0 (2018.2.11)
+
+#### Features
+
+- **Benchmark:** Add CPU benchmark/stresstest.
+
 # 1.0.2 (2018.2.6)
 
 #### Features
