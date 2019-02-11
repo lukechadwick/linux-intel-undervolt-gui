@@ -63,7 +63,6 @@ export default class Benchmark extends Component {
         // Disconnect from process when done
         benchWorker.disconnect();
       }
-      console.log(pids);
     }
   };
 
