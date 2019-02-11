@@ -11,9 +11,9 @@ Head to the release page and find a package suitable for your distro
 
 ### Prerequisites
 
-Python (tested with 3, unsure about 2)
+* Python (tested with 3, unsure about 2)
 
-SecureBoot disabled: msr provides an interface to read and write the model-specific registers and under linux this isn't possible with SecureBoot enabled.
+* SecureBoot disabled: msr provides an interface to read and write the model-specific registers and under linux this isn't possible with SecureBoot enabled.
 
 ## TODO
 
