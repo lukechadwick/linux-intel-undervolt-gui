@@ -14,7 +14,7 @@ Python (tested with 3, unsure about 2)
 
 
 
-### TODO
+## TODO
 
 - [x] Add benchmark/stress test
 - [ ] Add hardware info to read out temps/usage/voltages etc (in progress)
