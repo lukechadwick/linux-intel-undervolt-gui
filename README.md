@@ -11,8 +11,7 @@ Head to the release page and find a package suitable for your distro
 ### Prerequisites
 
 Python (tested with 3, unsure about 2)
-
-
+Secure boot disabled: msr provides an interface to read and write the model-specific registers and this isn't possible with secure boot enabled.
 
 ## TODO
 
@@ -20,13 +19,9 @@ Python (tested with 3, unsure about 2)
 - [ ] Add hardware info to read out temps/usage/voltages etc (in progress)
 - [ ] Maybe an auto undervolt script to find the lowest stable voltage
 
-
-
 ## Built With
 
 * [Electron React Boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate) - Framework for building desktop apps quickly
-
-
 
 ## License
 
